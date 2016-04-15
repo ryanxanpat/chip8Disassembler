@@ -1,7 +1,10 @@
 //Ryan Patrick
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdint.h>
+
+void decodeInstruction(char *machineCode, int pC);
 
 int main()
 {
@@ -21,9 +24,14 @@ int main()
 
     while(pC < memorySize)
     {
+        //printf("pC = %d\n", pC);
+
         decodeInstruction(machineCode, pC);
         pC += 2;
     }
+
+    // Free the memory allocated
+    free(machineCode);
 
     return 0;
 }
@@ -31,7 +39,77 @@ int main()
 
 void decodeInstruction(char *machineCode, int pC)
 {
+    uint8_t *byte = &machineCode[pC];
+    uint8_t halfByte = byte[0] >> 4; // Bitshift 4 bits right so we only look at first 4 bits
 
+    //printf("%d\n", halfByte);
 
+    switch(halfByte)
+    {
+        case 0x0:
+            {
+                break;
+            }
+        case 0x1:
+            {
+                break;
+            }
+        case 0x2:
+            {
+                break;
+            }
+        case 0x3:
+            {
+                break;
+            }
+        case 0x4:
+            {
+                break;
+            }
+        case 0x5:
+            {
+                break;
+            }
+        case 0x6:
+            {
+                break;
+            }
+        case 0x7:
+            {
+                break;
+            }
+        case 0x8:
+            {
+                break;
+            }
+        case 0x9:
+            {
+                break;
+            }
+        case 0xa:
+            {
+                break;
+            }
+        case 0xb:
+            {
+                break;
+            }
+        case 0xc:
+            {
+                break;
+            }
+        case 0xd:
+            {
+                break;
+            }
+        case 0xe:
+            {
+                break;
+            }
+        case 0xf:
+            {
+                break;
+            }
+    }
 
 }
