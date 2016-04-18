@@ -22,6 +22,8 @@ int main()
     long memorySize = 0x200 + codeSize;
     int pC = 0x200;
 
+    printf("ADDR | Instruction\n\n");
+
     while(pC < memorySize)
     {
         //printf("pC = %d\n", pC);
@@ -65,7 +67,7 @@ void decodeInstruction(char *machineCode, int pC)
                 address = address >> 4;
                 address = address | byte[1];
 
-                printf("JP %d\n", address);
+                printf("%04d   JP %d\n", pC, address);
 
                 // Jump instruction - 1nnn - JP addr, where addr = nnn
                 break;
@@ -82,7 +84,7 @@ void decodeInstruction(char *machineCode, int pC)
 
                 uint8_t val = byte[1];
 
-                printf("SE V%d, %d\n", reg, val);
+                printf("%04d   SE V%d, %d\n", pC, reg, val);
 
                 break;
             }
@@ -93,7 +95,7 @@ void decodeInstruction(char *machineCode, int pC)
 
                 uint8_t val = byte[1];
 
-                printf("SNE V%d, %d\n", reg, val);
+                printf("%04d   SNE V%d, %d\n", pC, reg, val);
 
                 break;
             }
@@ -103,7 +105,7 @@ void decodeInstruction(char *machineCode, int pC)
                 regX = regX >> 4;
                 uint8_t regY = byte[1] >> 4;
 
-                printf("SE V%d, V%d\n", regX, regY);
+                printf("%04d   SE V%d, V%d\n", pC, regX, regY);
 
                 break;
             }
@@ -113,7 +115,7 @@ void decodeInstruction(char *machineCode, int pC)
                 uint8_t reg = byte[0] << 4;
                 reg = reg >> 4;
 
-                printf("LD V%d, %d\n", reg, val);
+                printf("%04d   LD V%d, %d\n", pC, reg, val);
 
                 break;
             }
@@ -123,7 +125,7 @@ void decodeInstruction(char *machineCode, int pC)
                 uint8_t reg = byte[0] << 4;
                 reg = reg >> 4;
 
-                printf("ADD V%d, %d\n", reg, val);
+                printf("%04d   ADD V%d, %d\n", pC, reg, val);
 
                 break;
             }
@@ -140,47 +142,47 @@ void decodeInstruction(char *machineCode, int pC)
                 {
                     case 0x0:
                     {
-                        printf("LD V%d, V%d\n", regX, regY);
+                        printf("%04d   LD V%d, V%d\n", pC, regX, regY);
                         break;
                     }
                     case 0x1:
                     {
-                        printf("OR V%d, V%d\n", regX, regY);
+                        printf("%04d   OR V%d, V%d\n", pC, regX, regY);
                         break;
                     }
                     case 0x2:
                     {
-                        printf("AND V%d, V%d\n", regX, regY);
+                        printf("%04d   AND V%d, V%d\n", pC, regX, regY);
                         break;
                     }
                     case 0x3:
                     {
-                        printf("XOR V%d, V%d\n", regX, regY);
+                        printf("%04d   XOR V%d, V%d\n", pC, regX, regY);
                         break;
                     }
                     case 0x4:
                     {
-                        printf("ADD V%d, V%d\n", regX, regY);
+                        printf("%04d   ADD V%d, V%d\n", pC, regX, regY);
                         break;
                     }
                     case 0x5:
                     {
-                        printf("SUB V%d, V%d\n", regX, regY);
+                        printf("%04d   SUB V%d, V%d\n", pC, regX, regY);
                         break;
                     }
                     case 0x6:
                     {
-                        printf("SHR V%d {, V%d}\n", regX, regY);
+                        printf("%04d   SHR V%d {, V%d}\n", pC, regX, regY);
                         break;
                     }
                     case 0x7:
                     {
-                        printf("SUBN V%d, V%d\n", regX, regY);
+                        printf("%04d    SUBN V%d, V%d\n", pC, regX, regY);
                         break;
                     }
                     case 0xe:
                     {
-                        printf("SHL V%d {, V%d}\n", regX, regY);
+                        printf("%04d   SHL V%d {, V%d}\n", pC, regX, regY);
                         break;
                     }
                 }
@@ -194,7 +196,7 @@ void decodeInstruction(char *machineCode, int pC)
 
                 uint8_t regY = byte[1] >> 4;
 
-                printf("SNE V%d, V%d\n", regX, regY);
+                printf("%04d   SNE V%d, V%d\n", pC, regX, regY);
 
                 break;
             }
@@ -213,7 +215,7 @@ void decodeInstruction(char *machineCode, int pC)
 
                 uint8_t val = byte[1];
 
-                printf("RND V%d, %d\n", reg, val);
+                printf("%04d   RND V%d, %d\n", pC, reg, val);
 
                 break;
             }
@@ -226,7 +228,7 @@ void decodeInstruction(char *machineCode, int pC)
                 uint8_t nibble = byte[1] << 4;
                 nibble = nibble >> 4;
 
-                printf("DRW V%d, V%d, %d\n", regX, regY, nibble);
+                printf("%04d   DRW V%d, V%d, %d\n", pC, regX, regY, nibble);
 
                 break;
             }
@@ -241,12 +243,12 @@ void decodeInstruction(char *machineCode, int pC)
                 {
                     case 0x9e:
                     {
-                        printf("SKP V%d\n", reg);
+                        printf("%04d   SKP V%d\n", pC, reg);
                         break;
                     }
                     case 0xa1:
                     {
-                        printf("SKNP V%d\n", reg);
+                        printf("%04d   SKNP V%d\n", pC, reg);
                         break;
                     }
                 }
@@ -264,47 +266,47 @@ void decodeInstruction(char *machineCode, int pC)
                 {
                     case 0x07:
                     {
-                        printf("LD V%d, DT\n", reg);
+                        printf("%04d   LD V%d, DT\n", pC, reg);
                         break;
                     }
                     case 0x0a:
                     {
-                        printf("LD V%d, K\n", reg);
+                        printf("%04d   LD V%d, K\n", pC, reg);
                         break;
                     }
                     case 0x15:
                     {
-                        printf("LD DT, V%d\n", reg);
+                        printf("%04d   LD DT, V%d\n", pC, reg);
                         break;
                     }
                     case 0x18:
                     {
-                        printf("LD ST, V%d\n", reg);
+                        printf("%04d   LD ST, V%d\n", pC, reg);
                         break;
                     }
                     case 0x1e:
                     {
-                        printf("ADD I, V%d\n", reg);
+                        printf("%04d   ADD I, V%d\n", pC, reg);
                         break;
                     }
                     case 0x29:
                     {
-                        printf("LD F, V%d\n", reg);
+                        printf("%04d   LD F, V%d\n", pC, reg);
                         break;
                     }
                     case 0x33:
                     {
-                        printf("LD B, V%d\n", reg);
+                        printf("%04d   LD B, V%d\n", pC, reg);
                         break;
                     }
                     case 0x55:
                     {
-                        printf("LD [I], V%d\n", reg);
+                        printf("%04d   LD [I], V%d\n", pC, reg);
                         break;
                     }
                     case 0x65:
                     {
-                        printf("LD V%d, [I]\n", reg);
+                        printf("%04d   LD V%d, [I]\n", pC, reg);
                         break;
                     }
                 }
