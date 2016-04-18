@@ -50,31 +50,50 @@ void decodeInstruction(char *machineCode, int pC)
     {
         case 0x0:
             {
-                //SYS
+                uint8_t fullByte = byte[0];
 
-                //CLS
+                if(fullByte == 0x0)
+                {
+                    fullByte = byte[1];
 
-                //RET
+                    if(fullByte == 0xEE)
+                    {
+                        printf("%04d   RET\n", pC);
+                    }
+                    else
+                    {
+                        printf("%04d   CLS\n", pC);
+                    }
+                }
+                else
+                {
+                    uint16_t address = byte[0] << 12;
+                    address = address >> 4;
+                    address = address | byte[1];
+
+                    printf("%04d   SYS %d\n", pC, address);
+                }
+
                 break;
             }
         case 0x1:
             {
-                // 0000 0000 0000 0000
-                // 1111
-                // 0000 1111 0000 0000 | byte[1] 1010 1110
-
                 uint16_t address = byte[0] << 12;
                 address = address >> 4;
                 address = address | byte[1];
 
                 printf("%04d   JP %d\n", pC, address);
 
-                // Jump instruction - 1nnn - JP addr, where addr = nnn
                 break;
             }
         case 0x2:
             {
-                // 2nnn - CALL addr, where addr = nnn
+                uint16_t address = byte[0] << 12;
+                address = address >> 4;
+                address = address | byte[1];
+
+                printf("%04d   CALL %d\n", pC, address);
+
                 break;
             }
         case 0x3:
@@ -202,10 +221,22 @@ void decodeInstruction(char *machineCode, int pC)
             }
         case 0xa:
             {
+                uint16_t address = byte[0] << 12;
+                address = address >> 4;
+                address = address | byte[1];
+
+                printf("%04d   LD I, %d\n", pC, address);
+
                 break;
             }
         case 0xb:
             {
+                uint16_t address = byte[0] << 12;
+                address = address >> 4;
+                address = address | byte[1];
+
+                printf("%04d   JP V0, %d\n", pC, address);
+
                 break;
             }
         case 0xc:
