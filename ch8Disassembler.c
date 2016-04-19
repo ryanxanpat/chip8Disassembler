@@ -1,5 +1,7 @@
 //Ryan Patrick
 
+// This program prints assembly to the assembly.out file
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -65,9 +67,17 @@ void decodeInstruction(char *machineCode, int pC, FILE *ofp)
                     {
                         fprintf(ofp, "%04x   RET\n", pC);
                     }
-                    else
+                    else if(fullByte == 0xE0)
                     {
                         fprintf(ofp, "%04x   CLS\n", pC);
+                    }
+                    else
+                    {
+                        uint16_t address = byte[0] << 12;
+                        address = address >> 4;
+                        address = address | byte[1];
+
+                        fprintf(ofp, "%04x   SYS %x\n", pC, address);
                     }
                 }
                 else
