@@ -1,0 +1,19 @@
+ADDR | Instruction
+
+0200   CLS
+0202   RND V0, 255
+0204   LD I, 224
+0206   LD B, V0
+0208   LD V2, [I]
+020a   LD F, V0
+020c   LD V0, 0
+020e   LD V3, 0
+0210   DRW V0, V3, 5
+0212   LD F, V1
+0214   LD V0, 5
+0216   DRW V0, V3, 5
+0218   LD F, V2
+021a   LD V0, 10
+021c   DRW V0, V3, 5
+021e   LD V0, K
+0220   JP 200
