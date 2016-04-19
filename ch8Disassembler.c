@@ -219,6 +219,11 @@ void decodeInstruction(char *machineCode, int pC, FILE *ofp)
                         fprintf(ofp, "%04x   SHL V%x {, V%x}\n", pC, regX, regY);
                         break;
                     }
+                    default:
+                    {
+                        fprintf(ofp, "%04x   %02x %02x\n", pC, byte[0], byte[1]);
+                        break;
+                    }
                 }
 
                 break;
@@ -297,6 +302,11 @@ void decodeInstruction(char *machineCode, int pC, FILE *ofp)
                         fprintf(ofp, "%04x   SKNP V%x\n", pC, reg);
                         break;
                     }
+                    default:
+                    {
+                        fprintf(ofp, "%04x   %02x %02x\n", pC, byte[0], byte[1]);
+                        break;
+                    }
                 }
 
                 break;
@@ -355,10 +365,23 @@ void decodeInstruction(char *machineCode, int pC, FILE *ofp)
                         fprintf(ofp, "%04x   LD V%x, [I]\n", pC, reg);
                         break;
                     }
+
+                    default:
+                    {
+                        fprintf(ofp, "%04x   %02x %02x\n", pC, byte[0], byte[1]);
+                        break;
+                    }
                 }
 
                 break;
             }
+
+        default:
+        {
+            fprintf(ofp, "%04x   %02x %02x\n", pC, byte[0], byte[1]);
+            break;
+        }
+
     }
 
     return;
